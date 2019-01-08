@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson2 JS1</title>
+</head>
+<body>
+
+<script>
+    var randomNumber //загаданное число
+    var answers //попытки угадать от пользователя
+    var n //число попыток за которые угадали число
+    n=0
+    randomNumber = Math.round((Math.random()*1000))
+    numberInput()
+    function numberInput() {
+        n=n+1
+        answers=undefined //обнуляем ввод для повторного запроса
+    while ((answers<=0) || (isNaN(answers))|| (answers==undefined) || (typeof answers != 'number')  ) {
+        answers=Number(prompt('Попробуйте угадать целое значение от 0 до 1000'))
+        if ((answers<=0) || (isNaN(answers))|| (answers==undefined) || (typeof answers != 'number')  )
+            alert('Вы ввели неккоректное значение, попробуйте пожалуйста ещё раз!')
+    }
+
+    if (randomNumber==answers) {
+        alert('Вы угадали число с '+ n + ' раза!')
+            }
+    else if (randomNumber>answers) {
+        alert ('Загаданное число больше!')
+        numberInput() //запускаем рекурсию
+    }
+        else {
+        alert ('Загаданное число меньше!')
+        numberInput()//запускаем рекурсию
+    }
+    }
+
+</script>
+
+
+</body>
+</html>
