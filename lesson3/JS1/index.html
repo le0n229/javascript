@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson2 JS1</title>
+</head>
+<body>
+
+<script>
+
+    var randomNumber //загаданное число
+    var answers //попытки угадать от пользователя
+    var answers2='' //попытки угадать от пользователя в виде строки
+    var n=0 //число попыток за которые угадали число
+    var cow, bull//быки и коровы
+    var digits=4//количество символов в загаданном числе и ответе
+   randomNumber = Math.round((Math.random()*(10000)) - 1)
+    randomNumber=pad(randomNumber, digits)
+    numberInput()
+    function numberInput() {
+        n = n + 1
+        answers = undefined //обнуляем ввод для повторного запроса
+        while ((answers <= 0) || (isNaN(answers)) || (answers == undefined) || (typeof answers != 'number'))  {
+            answers = Number(prompt('Попробуйте угадать целое четырёхзначное число от 0000 до 9999'))
+            if (((answers <= 0) || (isNaN(answers)) || (answers == undefined) || (typeof answers != 'number')) )
+                alert('Вы ввели неккоректное значение, попробуйте пожалуйста ещё раз!')
+        }
+
+
+        if (randomNumber == answers) {
+            alert('Вы угадали число с ' + n + ' раза!')
+        } else {
+            cow = 0
+            bull = 0
+            answers2=answers.toString()
+                        for (let i = 0; i < answers2.length; i++) {
+                for (let z = 0; z < randomNumber.length; z++) {
+                    if (randomNumber[z] == answers2[i]) {
+
+                        if (i == z) {
+                            bull++
+                        } else {
+                            cow++
+                        }
+
+                    }
+                }
+            }
+
+            alert('Количество коров ' + cow + '; Количество быков ' + bull + ';')
+            numberInput() //запускаем рекурсию
+        }
+    }
+
+
+    function pad (str, max) {
+        str = str.toString();
+        return str.length < max ? pad("0" + str, max) : str;
+    }
+
+
+</script>
+
+
+
+</body>
+</html>
