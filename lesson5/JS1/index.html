@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson5 JS1</title>
+</head>
+<body>
+
+<div>
+    <ol id="list">
+        <li>Начало</li>
+    </ol>
+</div>
+
+<button id="button1" type="button" onclick="person.walk(prompt('Kуда бы вы хотели пойти? Введите right для перемещения направо или left для перемещения на лево или forward ' +
+ 'для движения вперёд или back для движения назад! Чтобы прекратить игру введите die...', 'right'))">Сделать ход
+</button>
+
+<script>
+
+    var newLi = document.createElement('li')
+    var z = 1
+    var person = {
+        coordinateX: 0,
+        coordinateY: 0,
+        health: 100,
+        walk: function (direction) {
+            if (this.health > 0) {
+                switch (direction) {
+                    case 'right':
+                        this.coordinateX = this.coordinateX + z
+                        this.health--
+                        var newLi = document.createElement('li')
+                        newLi.innerHTML = (Date() + ' Вы переместились, ваши новые координаты: X - ' + this.coordinateX + ' Y - ' + this.coordinateY + ' Но и ваше здоровье уменьшилось, теперь у вас осталось ' + this.health + ' ходов')
+                        list.appendChild(newLi)
+
+                        checkBonuses(this.coordinateX, this.coordinateY)
+                        break
+                    case 'left':
+                        this.coordinateX = this.coordinateX - z
+                        this.health--
+
+
+                        var newLi = document.createElement('li')
+                        newLi.innerHTML = (Date() + ' Вы переместились, ваши новые координаты: X - ' + this.coordinateX + ' Y - ' + this.coordinateY + ' Но и ваше здоровье уменьшилось, теперь у вас осталось ' + this.health + ' ходов')
+                        list.appendChild(newLi)
+
+                        checkBonuses(this.coordinateX, this.coordinateY)
+                        break
+                    case 'forward':
+                        this.coordinateY = this.coordinateY + z
+                        this.health--
+                        var newLi = document.createElement('li')
+                        newLi.innerHTML = (Date() + ' Вы переместились, ваши новые координаты: X - ' + this.coordinateX + ' Y - ' + this.coordinateY + ' Но и ваше здоровье уменьшилось, теперь у вас осталось ' + this.health + ' ходов')
+                        list.appendChild(newLi)
+                        checkBonuses(this.coordinateX, this.coordinateY)
+                        break
+                    case 'back':
+                        this.coordinateY = this.coordinateY - z
+                        this.health--
+                        var newLi = document.createElement('li')
+                        newLi.innerHTML = (Date() + ' Вы переместились, ваши новые координаты: X - ' + this.coordinateX + ' Y - ' + this.coordinateY + ' Но и ваше здоровье уменьшилось, теперь у вас осталось ' + this.health + ' ходов')
+                        list.appendChild(newLi)
+                        checkBonuses(this.coordinateX, this.coordinateY)
+                        break
+                    case 'die':
+                        this.health = 0
+                        break
+                    default:
+                        console.log('Введено неккоректное значение')
+                        break
+                }
+            } else {
+                alert('У вас недостаточно здоровья для перемещения')
+            }
+        },
+        eat: function () {
+            this.health++
+        }
+    }
+
+    var bonus1 = {
+        name: 'Сапоги скорости',
+        desc: 'Эти сапоги увеличивают скорость вашего перемещния!',
+        wear: function () {
+            z++
+            var newLi = document.createElement('li')
+            newLi.innerHTML = ('Ваша новая скорость:' + z)
+            list.appendChild(newLi)
+        },
+        takeOff: function () {
+            z--
+        },
+        coordinateX: 1,
+        coordinateY: 0
+
+    }
+
+
+    function checkBonuses(x, y) {
+        if (bonus1.coordinateX === x) {
+            if (bonus1.coordinateY === y)
+                var newLi = document.createElement('li')
+            newLi.innerHTML = ('Поздравляем! Вы нали артефакт:' + bonus1.name + '. ' + bonus1.desc)
+            list.appendChild(newLi)
+            bonus1.wear()
+        }
+
+
+    }
+
+
+</script>
+
+
+</body>
+</html>
