@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset="utf8"/>
+    <title>Snake</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .snake-field {
+        background-color: black;
+      }
+
+      .action-button {
+        width: 150px;
+        padding: 15px;
+        color: #fff;
+        background-color: crimson;
+        float: left;
+        margin-right: 20px;
+        text-align: center;
+      }
+
+      .game-table {
+        border-collapse: collapse;
+      }
+
+      .game-table-cell {
+        border: 1px dotted #eee;
+      }
+
+      .snake-unit {
+        background-color: firebrick;
+      }
+
+      .food-unit {
+        background-color: chartreuse;
+      }
+    </style>
+    <script src="snake.js"></script>
+  </head>
+  <body>
+    <div class="snake-field" id="snake-field"></div>
+    <button class="action-button" id="snake-start">Start</button>
+    <button class="action-button" id="snake-renew">New Game</button>
+  </body>
+</html>
