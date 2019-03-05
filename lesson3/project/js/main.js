@@ -1,5 +1,25 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
+class ProductItem {
+  constructor(product, img = 'https://placehold.it/200x150') {
+    this.title = product.product_name;
+    this.price = product.price;
+    this.id = product.id_product;
+    this.img = img;
+  }
+
+  render() {
+    return `<div class="product-item" data-id="${this.id}">
+                <img src="${this.img}" alt="Some img">
+                <div class="desc">
+                    <h3>${this.title}</h3>
+                    <p>${this.price} $</p>
+                    <button data-id=${this.id} class="buy-btn">Купить</button>
+                </div>
+            </div>`;
+  }
+}
+
 // обернул в промис
 function getRequestPromise(url) {
   return new Promise((resolve) => {
@@ -26,7 +46,7 @@ class ProductsList {
     //     this.render();
     //   });
     // отрисовываем наши продукты
-    this._fetchProducts()
+    this._fetchProducts('catalogData.json')
       .then(() => {
         // this.goods = [...data];
         this.render();
@@ -34,8 +54,8 @@ class ProductsList {
   }
 
   // через await получил промис
-  async _fetchProducts() {
-    const data = await getRequestPromise(`${API}/catalogData.json`);
+  async _fetchProducts(jsonItem) {
+    const data = await getRequestPromise(`${API}/${jsonItem}`);
     this.goods = JSON.parse(data);
   }
 
@@ -59,28 +79,19 @@ class ProductsList {
       this.allProducts.push(productObj);
       block.insertAdjacentHTML('beforeend', productObj.render());
     }
+    const addBtn = [...document.querySelectorAll('.buy-btn')];
+    for (const button of addBtn) {
+      button.addEventListener('click', (e) => {
+        for (const product of list.goods) {
+          if (product.id_product === +e.target.dataset.id) {
+            basket.addItem(product);
+          }
+        }
+      });
+    }
   }
 }
 
-class ProductItem {
-  constructor(product, img = 'https://placehold.it/200x150') {
-    this.title = product.product_name;
-    this.price = product.price;
-    this.id = product.id_product;
-    this.img = img;
-  }
-
-  render() {
-    return `<div class="product-item" data-id="${this.id}">
-                <img src="${this.img}" alt="Some img">
-                <div class="desc">
-                    <h3>${this.title}</h3>
-                    <p>${this.price} $</p>
-                    <button class="buy-btn">Купить</button>
-                </div>
-            </div>`;
-  }
-}
 
 const list = new ProductsList();
 // console.log(list.calcSum());
